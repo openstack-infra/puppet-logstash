@@ -1,0 +1,13 @@
+{
+  "name": "openstackci-logstash",
+  "version": "0.0.1",
+  "author": "Openstack CI",
+  "summary": "Puppet module for Logstash",
+  "license": "Apache 2.0",
+  "source": "git://git.openstack.org/openstack-infra/puppet-logstash.git",
+  "project_page": "http://ci.openstack.org/",
+  "issues_url": "https://storyboard.openstack.org/#!/project/763",
+  "dependencies": [
+    {"name":"puppetlabs/apache","version_requirement":">= 0.0.0"}
+  ]
+}
