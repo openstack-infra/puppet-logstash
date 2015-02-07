@@ -12,9 +12,16 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 #
-# Class to install logstash agent (shipper).
-# conf_template accepts path to agent config template.
 #
+# = Class: logstash::agent
+#
+# Class to install logstash agent (shipper)
+#
+# == Parameters
+#
+# [*conf_template*]
+#   String. Path to agent config template.
+#   Default: 'logstash/agent.conf.erb'
 class logstash::agent (
   $conf_template = 'logstash/agent.conf.erb'
 ) {

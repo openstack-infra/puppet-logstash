@@ -12,7 +12,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 #
-# Class to install elasticsearch.
+#
+# = Class: logstash::elasticsearch
+#
+# Class to install elasticsearch
 #
 class logstash::elasticsearch {
   file { '/etc/elasticsearch/templates/logstash_settings.json':

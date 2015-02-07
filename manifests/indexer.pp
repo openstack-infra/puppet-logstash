@@ -12,9 +12,15 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 #
-# Class to install logstash indexer.
-# conf_template accepts path to indexer config template.
+# = Class: logstash::indexer
 #
+# Class to install logstash indexer
+#
+# == Parameters
+#
+# [*conf_template*]
+#   String. Path to indexer config template.
+#   Default: 'logstash/agent.conf.erb'
 class logstash::indexer (
   $conf_template = 'logstash/indexer.conf.erb'
 ) {

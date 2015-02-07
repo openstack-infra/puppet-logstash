@@ -12,7 +12,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 #
-# Class to install redis.
+#
+# = Class: logstash::redis
+#
+# Class to install redis
 #
 class logstash::redis {
   # TODO(clarkb): Access to redis should be controlled at a network level
