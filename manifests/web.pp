@@ -12,7 +12,32 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 #
-# Class to run logstash web front end.
+# = Class: logstash::web
+#
+# Class to run logstash web front end
+#
+# == Parameters
+#
+# [*vhost_name*]
+#   String. FQDN of the web listener
+#   Default: $::fqdn
+#
+# [*serveradmin*]
+#   String. Email address of the administator
+#   Default: webserver@${::fqdn}
+#
+# [*frontend*]
+#   String. Which kind of web frontend to use
+#   Default: internal
+#   Valid Values: 'internal', 'kibana'
+#
+# [*discover_nodes*]
+#   Array of strings. Nodes to connect to by default (kibana only)
+#   Default: ['localhost:9200']
+#
+# [*proxy_elasticsearch*]
+#   Boolean. Enables using apache mod_proxy to proxy reqs to ES (kibana only)
+#   Default: false
 #
 class logstash::web (
   $vhost_name = $::fqdn,
