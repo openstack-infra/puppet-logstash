@@ -24,7 +24,7 @@
 class logstash::indexer (
   $conf_template = 'logstash/indexer.conf.erb'
 ) {
-  include logstash
+  include ::logstash
 
   file { '/etc/init/logstash-indexer.conf':
     ensure  => present,
@@ -40,7 +40,6 @@ class logstash::indexer (
     owner   => 'logstash',
     group   => 'logstash',
     mode    => '0644',
-    require => Class['logstash'],
   }
 
   service { 'logstash-indexer':
@@ -48,7 +47,7 @@ class logstash::indexer (
     enable    => true,
     subscribe => File['/etc/logstash/indexer.conf'],
     require   => [
-      Class['logstash'],
+      Class['::logstash'],
       File['/etc/init/logstash-indexer.conf'],
     ]
   }
