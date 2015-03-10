@@ -25,7 +25,6 @@
 class logstash::agent (
   $conf_template = 'logstash/agent.conf.erb'
 ) {
-  include logstash
 
   file { '/etc/init/logstash-agent.conf':
     ensure  => present,
@@ -41,7 +40,7 @@ class logstash::agent (
     owner   => 'logstash',
     group   => 'logstash',
     mode    => '0644',
-    require => Class['logstash'],
+    require => Class['::logstash'],
   }
 
   service { 'logstash-agent':
@@ -49,7 +48,7 @@ class logstash::agent (
     enable    => true,
     subscribe => File['/etc/logstash/agent.conf'],
     require   => [
-      Class['logstash'],
+      Class['::logstash'],
       File['/etc/init/logstash-agent.conf'],
     ]
   }
