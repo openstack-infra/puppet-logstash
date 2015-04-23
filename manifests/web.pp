@@ -93,9 +93,10 @@ class logstash::web (
   }
 
   apache::vhost { $vhost_name:
-    port     => 80,
-    docroot  => 'MEANINGLESS ARGUMENT',
-    priority => '50',
-    template => $vhost,
+    port       => 80,
+    docroot    => 'MEANINGLESS ARGUMENT',
+    priority   => '50',
+    template   => $vhost,
+    vhost_name => $vhost_name,
   }
 }
