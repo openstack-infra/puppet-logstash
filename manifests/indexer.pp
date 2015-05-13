@@ -52,4 +52,18 @@ class logstash::indexer (
       File['/etc/init/logstash-indexer.conf'],
     ]
   }
+
+  include logrotate
+  logrotate::file { 'indexer.log':
+    log     => '/var/log/logstash/indexer.log',
+    options => [
+      'compress',
+      'copytruncate',
+      'missingok',
+      'rotate 7',
+      'daily',
+      'notifempty',
+    ],
+    require => Service['logstash-indexer'],
+  }
 }
