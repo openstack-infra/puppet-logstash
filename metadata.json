@@ -8,6 +8,7 @@
   "project_page": "http://docs.openstack.org/infra/system-config/",
   "issues_url": "https://storyboard.openstack.org/#!/project/763",
   "dependencies": [
-    {"name":"puppetlabs/apache","version_requirement":">= 0.0.3 <0.0.5"}
+    {"name":"puppetlabs/apache","version_requirement":">= 0.0.3 <0.0.5"},
+    {"name":"openstackinfra/logrotate"}
   ]
 }
