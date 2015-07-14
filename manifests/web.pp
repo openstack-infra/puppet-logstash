@@ -46,14 +46,14 @@ class logstash::web (
   $discover_nodes = ['localhost:9200'],
   $proxy_elasticsearch = false
 ) {
-  include apache
-  a2mod { 'rewrite':
+  include ::httpd
+  httpd_mod { 'rewrite':
     ensure => present,
   }
-  a2mod { 'proxy':
+  httpd_mod { 'proxy':
     ensure => present,
   }
-  a2mod { 'proxy_http':
+  httpd_mod { 'proxy_http':
     ensure => present,
   }
 
@@ -92,7 +92,7 @@ class logstash::web (
     }
   }
 
-  apache::vhost { $vhost_name:
+  httpd::vhost { $vhost_name:
     port       => 80,
     docroot    => 'MEANINGLESS ARGUMENT',
     priority   => '50',
