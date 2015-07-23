@@ -1,0 +1,10 @@
+Verified+2: Jenkins
+Code-Review+2: yolanda.robla <info@ysoft.biz>
+Code-Review+2: Spencer Krum <nibz@spencerkrum.com>
+Workflow+1: Spencer Krum <nibz@spencerkrum.com>
+Code-Review+1: Clint Adams <clint@gcfm.net>
+Submitted-by: Jenkins
+Submitted-at: Thu, 23 Jul 2015 16:45:37 +0000
+Reviewed-on: https://review.openstack.org/201735
+Project: openstack-infra/puppet-logstash
+Branch: refs/heads/master
