@@ -32,11 +32,11 @@ class logstash {
   }
 
   file { '/opt/logstash':
-    ensure   => directory,
-    owner    => 'logstash',
-    group    => 'logstash',
-    mode     => '0644',
-    require  => User['logstash'],
+    ensure  => directory,
+    owner   => 'logstash',
+    group   => 'logstash',
+    mode    => '0644',
+    require => User['logstash'],
   }
 
   exec { 'get_logstash_jar':

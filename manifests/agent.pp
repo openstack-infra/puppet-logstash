@@ -25,7 +25,7 @@
 class logstash::agent (
   $conf_template = 'logstash/agent.conf.erb'
 ) {
-  include logstash
+  include ::logstash
 
   file { '/etc/init/logstash-agent.conf':
     ensure  => present,

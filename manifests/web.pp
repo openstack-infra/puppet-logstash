@@ -57,7 +57,7 @@ class logstash::web (
     ensure => present,
   }
 
-  include logstash
+  include ::logstash
 
   case $frontend {
     'internal': {
@@ -69,9 +69,9 @@ class logstash::web (
       }
 
       service { 'logstash-web':
-        ensure    => running,
-        enable    => true,
-        require   => [
+        ensure  => running,
+        enable  => true,
+        require => [
           Class['logstash'],
           File['/etc/init/logstash-web.conf'],
         ],
@@ -81,7 +81,7 @@ class logstash::web (
     }
 
     'kibana': {
-      class { 'kibana':
+      class { '::kibana':
         discover_nodes => $discover_nodes,
       }
       $vhost = 'logstash/kibana.vhost.erb'

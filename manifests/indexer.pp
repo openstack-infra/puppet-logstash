@@ -24,7 +24,7 @@
 class logstash::indexer (
   $conf_template = 'logstash/indexer.conf.erb'
 ) {
-  include logstash
+  include ::logstash
 
   file { '/etc/init/logstash-indexer.conf':
     ensure  => present,
@@ -53,7 +53,7 @@ class logstash::indexer (
     ]
   }
 
-  include logrotate
+  include ::logrotate
   logrotate::file { 'indexer.log':
     log     => '/var/log/logstash/indexer.log',
     options => [
