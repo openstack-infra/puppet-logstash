@@ -82,21 +82,15 @@ class logstash::web (
 
     'kibana': {
       class { '::kibana':
-        discover_nodes => $discover_nodes,
+        version                 => 'js',
+        discover_nodes          => $discover_nodes,
+        js_elasticsearch_prefix => '/elasticsearch/',
+        js_elasticsearch_url    => "http://${discover_nodes[0]}:9200",
       }
-      $vhost = 'logstash/kibana.vhost.erb'
     }
 
     default: {
       fail("Unknown frontend to logstash: ${frontend}.")
     }
-  }
-
-  ::httpd::vhost { $vhost_name:
-    port       => 80,
-    docroot    => 'MEANINGLESS ARGUMENT',
-    priority   => '50',
-    template   => $vhost,
-    vhost_name => $vhost_name,
   }
 }
