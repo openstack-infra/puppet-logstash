@@ -44,6 +44,7 @@ class logstash {
     path    => '/bin:/usr/bin',
     creates => '/opt/logstash/logstash-1.3.3-flatjar.jar',
     require => File['/opt/logstash'],
+    timeout => 0,
   }
 
   file { '/opt/logstash/logstash-1.3.3-flatjar.jar':

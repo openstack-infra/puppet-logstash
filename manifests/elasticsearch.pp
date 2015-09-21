@@ -18,6 +18,21 @@
 # Class to install elasticsearch
 #
 class logstash::elasticsearch {
+  if (!defined(File['/etc/elasticsearch'])) {
+    file { '/etc/elasticsearch':
+      ensure => directory,
+      owner  => 'root',
+    }
+  }
+
+  if (!defined(File['/etc/elasticsearch/templates'])) {
+    file { '/etc/elasticsearch/templates':
+      ensure  => directory,
+      owner   => 'root',
+      require => File['/etc/elasticsearch'],
+    }
+  }
+
   file { '/etc/elasticsearch/templates/logstash_settings.json':
     ensure  => present,
     source  => 'puppet:///modules/logstash/es-logstash-template.json',
