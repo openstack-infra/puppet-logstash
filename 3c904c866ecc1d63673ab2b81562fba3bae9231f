@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Clark Boylan <cboylan@sapwetik.org>
+Code-Review+2: yolanda.robla <info@ysoft.biz>
+Workflow+1: yolanda.robla <info@ysoft.biz>
+Submitted-by: Jenkins
+Submitted-at: Thu, 01 Oct 2015 07:47:22 +0000
+Reviewed-on: https://review.openstack.org/222741
+Project: openstack-infra/puppet-logstash
+Branch: refs/heads/master
