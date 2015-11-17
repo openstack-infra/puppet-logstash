@@ -34,10 +34,11 @@ class logstash::curator (
   }
 
   cron { 'cleanup_old_es_indices':
-    user    => 'root',
-    hour    => $cron_hour,
-    minute  => $cron_minute,
-    command => "/usr/bin/curator --logfile /var/log/curator.log delete indices --older-than ${keep_for_days} --time-unit days --timestring %Y.%m.%d"
+    user        => 'root',
+    hour        => $cron_hour,
+    minute      => $cron_minute,
+    environment => 'PATH=/usr/bin:/usr/local/bin',
+    command     => "curator --logfile /var/log/curator.log delete indices --older-than ${keep_for_days} --time-unit days --timestring %Y.%m.%d"
   }
 
   include ::logrotate
