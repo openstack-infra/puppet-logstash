@@ -25,32 +25,8 @@
 class logstash::agent (
   $conf_template = 'logstash/agent.conf.erb'
 ) {
-  include ::logstash
-
-  file { '/etc/init/logstash-agent.conf':
-    ensure  => present,
-    source  => 'puppet:///modules/logstash/logstash-agent.conf',
-    replace => true,
-    owner   => 'root',
-  }
-
-  file { '/etc/logstash/agent.conf':
-    ensure  => present,
-    content => template($conf_template),
-    replace => true,
-    owner   => 'logstash',
-    group   => 'logstash',
-    mode    => '0644',
-    require => Class['logstash'],
-  }
-
-  service { 'logstash-agent':
-    ensure    => running,
-    enable    => true,
-    subscribe => File['/etc/logstash/agent.conf'],
-    require   => [
-      Class['logstash'],
-      File['/etc/init/logstash-agent.conf'],
-    ]
+  warning('This class is deprecated and logstash::indexer should be used instead')
+  class { '::logstash::indexer':
+    conf_template => $conf_template,
   }
 }

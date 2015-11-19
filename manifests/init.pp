@@ -17,69 +17,26 @@
 # Class to install common logstash items.
 #
 class logstash {
-  group { 'logstash':
-    ensure => present,
-  }
-
-  user { 'logstash':
-    ensure     => present,
-    comment    => 'Logstash User',
-    home       => '/opt/logstash',
-    gid        => 'logstash',
-    shell      => '/bin/bash',
-    membership => 'minimum',
-    require    => Group['logstash'],
-  }
-
-  file { '/opt/logstash':
-    ensure  => directory,
-    owner   => 'logstash',
-    group   => 'logstash',
-    mode    => '0644',
-    require => User['logstash'],
-  }
-
-  exec { 'get_logstash_jar':
-    command => 'wget https://download.elasticsearch.org/logstash/logstash/logstash-1.3.3-flatjar.jar -O /opt/logstash/logstash-1.3.3-flatjar.jar',
-    path    => '/bin:/usr/bin',
-    creates => '/opt/logstash/logstash-1.3.3-flatjar.jar',
-    require => File['/opt/logstash'],
-  }
-
-  file { '/opt/logstash/logstash-1.3.3-flatjar.jar':
-    ensure  => present,
-    owner   => 'logstash',
-    group   => 'logstash',
-    mode    => '0644',
-    require => [
-      User['logstash'],
-      Exec['get_logstash_jar'],
-    ]
-  }
-
-  file { '/opt/logstash/logstash.jar':
-    ensure  => link,
-    target  => '/opt/logstash/logstash-1.3.3-flatjar.jar',
-    require => File['/opt/logstash/logstash-1.3.3-flatjar.jar'],
-  }
-
-  file { '/var/log/logstash':
-    ensure => directory,
-    owner  => 'logstash',
-    group  => 'logstash',
-    mode   => '0644',
-  }
-
-  file { '/etc/logstash':
-    ensure => directory,
-    owner  => 'logstash',
-    group  => 'logstash',
-    mode   => '0644',
+  archive { '/tmp/logstash_2.0.0-1_all.deb':
+    source        => 'https://download.elastic.co/logstash/logstash/packages/debian/logstash_2.0.0-1_all.deb',
+    extract       => false,
+    checksum      => '094b18c77d7c959c1203012983337d5249922290',
+    checksum_type => 'sha1',
   }
 
   if ! defined(Package['openjdk-7-jre-headless']) {
     package { 'openjdk-7-jre-headless':
       ensure => present,
     }
+  }
+
+  package { 'logstash':
+    ensure   => latest,
+    source   => '/tmp/logstash_2.0.0-1_all.deb',
+    provider => 'dpkg',
+    require  => [
+      Package['openjdk-7-jre-headless'],
+      Archive['/tmp/logstash_2.0.0-1_all.deb'],
+    ]
   }
 }
