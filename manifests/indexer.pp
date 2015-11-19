@@ -20,20 +20,13 @@
 #
 # [*conf_template*]
 #   String. Path to indexer config template.
-#   Default: 'logstash/agent.conf.erb'
+#   Default: 'logstash/indexer.conf.erb'
 class logstash::indexer (
   $conf_template = 'logstash/indexer.conf.erb'
 ) {
   include ::logstash
 
-  file { '/etc/init/logstash-indexer.conf':
-    ensure  => present,
-    source  => 'puppet:///modules/logstash/logstash-indexer.conf',
-    replace => true,
-    owner   => 'root',
-  }
-
-  file { '/etc/logstash/indexer.conf':
+  file { '/etc/logstash/conf.d/indexer.conf':
     ensure  => present,
     content => template($conf_template),
     replace => true,
@@ -43,27 +36,23 @@ class logstash::indexer (
     require => Class['logstash'],
   }
 
-  service { 'logstash-indexer':
-    ensure    => running,
-    enable    => true,
-    subscribe => File['/etc/logstash/indexer.conf'],
-    require   => [
-      Class['logstash'],
-      File['/etc/init/logstash-indexer.conf'],
-    ]
+  file { '/etc/default/logstash':
+    ensure  => present,
+    source  => 'puppet:///modules/logstash/logstash.default',
+    replace => true,
+    owner   => 'logstash',
+    group   => 'logstash',
+    mode    => '0644',
+    require => Class['logstash'],
   }
 
-  include ::logrotate
-  logrotate::file { 'indexer.log':
-    log     => '/var/log/logstash/indexer.log',
-    options => [
-      'compress',
-      'copytruncate',
-      'missingok',
-      'rotate 7',
-      'daily',
-      'notifempty',
+  service { 'logstash':
+    ensure    => running,
+    enable    => true,
+    subscribe => [
+      File['/etc/logstash/conf.d/indexer.conf'],
+      File['/etc/default/logstash'],
     ],
-    require => Service['logstash-indexer'],
+    require   => Class['logstash'],
   }
 }
