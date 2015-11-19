@@ -57,27 +57,9 @@ class logstash::web (
     ensure => present,
   }
 
-  include ::logstash
-
   case $frontend {
     'internal': {
-      file { '/etc/init/logstash-web.conf':
-        ensure  => present,
-        source  => 'puppet:///modules/logstash/logstash-web.conf',
-        replace => true,
-        owner   => 'root',
-      }
-
-      service { 'logstash-web':
-        ensure  => running,
-        enable  => true,
-        require => [
-          Class['logstash'],
-          File['/etc/init/logstash-web.conf'],
-        ],
-      }
-
-      $vhost = 'logstash/logstash.vhost.erb'
+      fail('This stopped working when we moved to Kibana3 and there is no analog in logstash 2.0. Use kibana.')
     }
 
     'kibana': {
