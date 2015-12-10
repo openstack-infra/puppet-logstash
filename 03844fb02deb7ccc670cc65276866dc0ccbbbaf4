@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Clark Boylan <cboylan@sapwetik.org>
+Workflow+1: Clark Boylan <cboylan@sapwetik.org>
+Code-Review+1: Matt Riedemann <mriedem@us.ibm.com>
+Submitted-by: Jenkins
+Submitted-at: Thu, 10 Dec 2015 00:12:10 +0000
+Reviewed-on: https://review.openstack.org/255371
+Project: openstack-infra/puppet-logstash
+Branch: refs/heads/master
