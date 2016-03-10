@@ -1,0 +1,10 @@
+Code-Review+1: Anita Kuno <anteaya@anteaya.info>
+Code-Review+2: Paul Belanger <pabelanger@redhat.com>
+Code-Review+2: Spencer Krum <nibz@spencerkrum.com>
+Workflow+1: Clark Boylan <cboylan@sapwetik.org>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 10 Mar 2016 22:23:42 +0000
+Reviewed-on: https://review.openstack.org/247756
+Project: openstack-infra/puppet-logstash
+Branch: refs/heads/master
