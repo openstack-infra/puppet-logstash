@@ -18,6 +18,7 @@
 # Class to install redis
 #
 class logstash::redis {
+  warning('This class is deprecated and should not be used')
   # TODO(clarkb): Access to redis should be controlled at a network level
   # (with iptables) and with client authentication. Put this in place before
   # opening redis to external clients.
