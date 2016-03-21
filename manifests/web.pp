@@ -40,11 +40,11 @@
 #   Default: false
 #
 class logstash::web (
-  $vhost_name = $::fqdn,
-  $serveradmin = "webmaster@${::fqdn}",
-  $frontend = 'internal',
-  $discover_nodes = ['localhost:9200'],
-  $proxy_elasticsearch = false
+  $discover_nodes      = ['localhost:9200'],
+  $frontend            = 'internal',
+  $proxy_elasticsearch = false,
+  $serveradmin         = "webmaster@${::fqdn}",
+  $vhost_name          = $::fqdn,
 ) {
   include ::httpd
   httpd_mod { 'rewrite':

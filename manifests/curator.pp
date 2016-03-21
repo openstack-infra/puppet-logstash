@@ -15,10 +15,10 @@
 # ELK curator
 #
 class logstash::curator (
-  $keep_for_days  = '14',
-  $pin_for_old_es = false,
   $cron_hour      = '2',
   $cron_minute    = '0',
+  $keep_for_days  = '14',
+  $pin_for_old_es = false,
 ) {
 
   if ($pin_for_old_es) {

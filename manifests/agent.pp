@@ -23,7 +23,7 @@
 #   String. Path to agent config template.
 #   Default: 'logstash/agent.conf.erb'
 class logstash::agent (
-  $conf_template = 'logstash/agent.conf.erb'
+  $conf_template = 'logstash/agent.conf.erb',
 ) {
   warning('This class is deprecated and logstash::indexer should be used instead')
   class { '::logstash::indexer':

@@ -22,7 +22,7 @@
 #   String. Path to indexer config template.
 #   Default: 'logstash/indexer.conf.erb'
 class logstash::indexer (
-  $conf_template = 'logstash/indexer.conf.erb'
+  $conf_template = 'logstash/indexer.conf.erb',
 ) {
   include ::logstash
 
