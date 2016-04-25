@@ -18,17 +18,31 @@
 #
 # == Parameters
 #
-# [*conf_template*]
-#   String. Path to indexer config template.
-#   Default: 'logstash/indexer.conf.erb'
+# [*input_template*]
+#   String. Path to indexer input config template.
+#   Default: 'logstash/input.conf.erb'
+# [*output_template*]
+#   String. Path to indexer output config template.
+#   Default: 'logstash/output.conf.erb'
 class logstash::indexer (
-  $conf_template = 'logstash/indexer.conf.erb',
+  $input_template  = 'logstash/input.conf.erb',
+  $output_template = 'logstash/output.conf.erb',
 ) {
   include ::logstash
 
-  file { '/etc/logstash/conf.d/indexer.conf':
+  file { '/etc/logstash/conf.d/00-input.conf':
     ensure  => present,
-    content => template($conf_template),
+    content => template($input_template),
+    replace => true,
+    owner   => 'logstash',
+    group   => 'logstash',
+    mode    => '0644',
+    require => Class['logstash'],
+  }
+
+  file { '/etc/logstash/conf.d/99-output.conf':
+    ensure  => present,
+    content => template($output_template),
     replace => true,
     owner   => 'logstash',
     group   => 'logstash',
