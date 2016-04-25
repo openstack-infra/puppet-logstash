@@ -30,11 +30,18 @@ describe 'puppet-logstash module', :if => ['debian', 'ubuntu'].include?(os[:fami
     end
 
     describe 'module logstash::indexer' do
-      describe file('/etc/logstash/conf.d/indexer.conf') do
+      describe file('/etc/logstash/conf.d/00-input.conf') do
         it { should be_file }
         it { should be_owned_by 'logstash' }
         it { should be_grouped_into 'logstash' }
         its(:content) { should include 'type => "redis-input"' }
+        its(:content) { should include 'host => "127.0.0.1"' }
+      end
+
+      describe file('/etc/logstash/conf.d/99-output.conf') do
+        it { should be_file }
+        it { should be_owned_by 'logstash' }
+        it { should be_grouped_into 'logstash' }
         its(:content) { should include 'host => "127.0.0.1"' }
       end
 
