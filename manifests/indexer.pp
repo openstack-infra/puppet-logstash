@@ -19,21 +19,53 @@
 # == Parameters
 #
 # [*conf_template*]
-#   String. Path to indexer config template.
-#   Default: 'logstash/indexer.conf.erb'
+#   String. (deprecated) Path to indexer config template.
+#   Default: undef
+# [*input_template*]
+#   String. Path to indexer input config template.
+#   Default: 'logstash/input.conf.erb'
+# [*output_template*]
+#   String. Path to indexer output config template.
+#   Default: 'logstash/output.conf.erb'
 class logstash::indexer (
-  $conf_template = 'logstash/indexer.conf.erb',
+  $conf_template   = '',
+  $input_template  = 'logstash/input.conf.erb',
+  $output_template = 'logstash/output.conf.erb',
 ) {
   include ::logstash
 
-  file { '/etc/logstash/conf.d/indexer.conf':
-    ensure  => present,
-    content => template($conf_template),
-    replace => true,
-    owner   => 'logstash',
-    group   => 'logstash',
-    mode    => '0644',
-    require => Class['logstash'],
+  if $conf_template != '' {
+    notify { 'Using $conf_template is deprecated, please switch to $input_template, $output_template and ::logstash::filter defines.': }
+
+    file { '/etc/logstash/conf.d/indexer.conf':
+      ensure  => present,
+      content => template($conf_template),
+      replace => true,
+      owner   => 'logstash',
+      group   => 'logstash',
+      mode    => '0644',
+      require => Class['logstash'],
+    }
+  } else {
+    file { '/etc/logstash/conf.d/00-input.conf':
+      ensure  => present,
+      content => template($input_template),
+      replace => true,
+      owner   => 'logstash',
+      group   => 'logstash',
+      mode    => '0644',
+      require => Class['logstash'],
+    }
+
+    file { '/etc/logstash/conf.d/99-output.conf':
+      ensure  => present,
+      content => template($output_template),
+      replace => true,
+      owner   => 'logstash',
+      group   => 'logstash',
+      mode    => '0644',
+      require => Class['logstash'],
+    }
   }
 
   file { '/etc/default/logstash':
