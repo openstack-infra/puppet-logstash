@@ -15,10 +15,6 @@ file { '/etc/elasticsearch/templates':
 
 class { '::logstash': }
 
-class { '::logstash::agent':
-  require => Class['::logstash'],
-}
-
 class { '::logstash::elasticsearch':
   require => Class['::logstash'],
 }
