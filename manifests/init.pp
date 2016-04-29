@@ -17,6 +17,8 @@
 # Class to install common logstash items.
 #
 class logstash {
+  include ::logrotate
+
   archive { '/tmp/logstash_2.0.0-1_all.deb':
     source        => 'https://download.elastic.co/logstash/logstash/packages/debian/logstash_2.0.0-1_all.deb',
     extract       => false,
@@ -35,6 +37,7 @@ class logstash {
     source   => '/tmp/logstash_2.0.0-1_all.deb',
     provider => 'dpkg',
     require  => [
+      Package['logrotate'],
       Package['openjdk-7-jre-headless'],
       Archive['/tmp/logstash_2.0.0-1_all.deb'],
     ]
