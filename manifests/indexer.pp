@@ -48,6 +48,10 @@ class logstash::indexer (
       notify  => Service['logstash'],
     }
   } else {
+    file { '/etc/logstash/conf.d/indexer.conf':
+      ensure => absent,
+    }
+
     file { '/etc/logstash/conf.d/00-input.conf':
       ensure  => present,
       content => template($input_template),
