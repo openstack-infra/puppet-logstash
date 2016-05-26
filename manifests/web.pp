@@ -46,17 +46,6 @@ class logstash::web (
   $serveradmin         = "webmaster@${::fqdn}",
   $vhost_name          = $::fqdn,
 ) {
-  include ::httpd
-  httpd_mod { 'rewrite':
-    ensure => present,
-  }
-  httpd_mod { 'proxy':
-    ensure => present,
-  }
-  httpd_mod { 'proxy_http':
-    ensure => present,
-  }
-
   case $frontend {
     'internal': {
       fail('This stopped working when we moved to Kibana3 and there is no analog in logstash 2.0. Use kibana.')
