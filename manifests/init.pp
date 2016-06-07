@@ -18,6 +18,7 @@
 #
 class logstash {
   include ::logrotate
+  include ::archive
 
   archive { '/tmp/logstash_2.0.0-1_all.deb':
     source        => 'https://download.elastic.co/logstash/logstash/packages/debian/logstash_2.0.0-1_all.deb',
