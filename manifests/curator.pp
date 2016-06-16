@@ -24,12 +24,12 @@ class logstash::curator (
   if ($pin_for_old_es) {
     package { 'elasticsearch-curator':
       ensure   => '0.6.2',
-      provider => 'pip',
+      provider => openstack_pip,
     }
   } else {
     package { 'elasticsearch-curator':
       ensure   => 'latest',
-      provider => 'pip',
+      provider => openstack_pip,
     }
   }
 
