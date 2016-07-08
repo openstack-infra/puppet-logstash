@@ -28,7 +28,8 @@ class logstash::curator (
     }
   } else {
     package { 'elasticsearch-curator':
-      ensure   => 'latest',
+      # Pin until we add support for the new stuff in 4.0
+      ensure   => '3.5.1',
       provider => openstack_pip,
     }
   }
