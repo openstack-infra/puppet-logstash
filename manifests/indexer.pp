@@ -31,6 +31,8 @@ class logstash::indexer (
   $conf_template   = undef,
   $input_template  = 'logstash/input.conf.erb',
   $output_template = 'logstash/output.conf.erb',
+  $enable_mqtt = false,
+  $mqtt_ca_cert_contents = undef,
 ) {
   include ::logstash
 
@@ -84,7 +86,22 @@ class logstash::indexer (
     mode    => '0644',
     require => Class['logstash'],
   }
+  if $enable_mqtt {
+    exec {'install_mqtt_plugin':
+      command => '/opt/logstash/bin/plugin install logstash-output-mqtt',
+      before  => Service['logstash'],
+      onlyif  => '/opt/logstash/bin/plugin list logstash-output-mqtt',
+    }
 
+    file { '/etc/logstash/mqtt-root-CA.pem.crt':
+      ensure  => present,
+      content => $mqtt_ca_cert_contents,
+      owner   => 'logstash',
+      group   => 'logstash',
+      mode    => '0600',
+      notify  => Service['logstash']
+    }
+  }
   service { 'logstash':
     ensure    => running,
     enable    => true,
