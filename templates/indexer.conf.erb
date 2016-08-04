@@ -11,8 +11,25 @@ input {
   }
 }
 
+
+
 output {
   elasticsearch {
     host => "127.0.0.1"
   }
+<% if @enable_mqtt -%>
+  mqtt {
+    host => <%= @mqtt_host %>
+    port => <%= @mqtt_port %>
+    topic => <%= @mqtt_topic %>
+    ssl => true
+<% if  @mqtt_certfile_contents -%>
+    cert_file => "/etc/logstash/mqtt_cert.pem.crt"
+<% end -%>
+<% if @mqtt_key_file_contents -%>
+    key_file => "/etc/logstash/mqtt_private.pem.key"
+<% end -%>
+    ca_file => "/etc/logastash/mqtt-root-CA.crt"
+  }
+<% end -%>
 }

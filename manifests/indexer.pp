@@ -31,6 +31,13 @@ class logstash::indexer (
   $conf_template   = undef,
   $input_template  = 'logstash/input.conf.erb',
   $output_template = 'logstash/output.conf.erb',
+  $enable_mqtt = true,
+  $mqtt_hostname = 'firehose.openstack.org',
+  $mqtt_port = 8883,
+  $mqtt_topic = "logstash/${servername}",
+  $mqtt_certfile_contents = undef,
+  $mqtt_key_file_contents = undef,
+  $mqtt_ca_cert_contents = undef,
 ) {
   include ::logstash
 
@@ -84,7 +91,46 @@ class logstash::indexer (
     mode    => '0644',
     require => Class['logstash'],
   }
+  if $enable_mqtt {
+    exec {'install_mqtt_plugin':
+      command => '/opt/logstash/bin/plugin install logstash-output-mqtt',
+      before  => Service['logstash']
+    }
 
+    if $mqtt_certfile_contents != undef {
+      file { '/etc/logstash/mqtt_cert.pem.crt':
+        ensure  => present,
+        content => $mqtt_certfile_contents,
+        replace => true,
+        owner   => 'logstash',
+        group   => 'logstash',
+        mode    => '0600',
+        before  => Service['logstash']
+      }
+    }
+
+    if $mqtt_key_file_contents != undef {
+      file { '/etc/logstash/mqtt_private.pem.key':
+        ensure  => present,
+        content => $mqtt_key_file_contents,
+        replace => true,
+        owner   => 'logstash',
+        group   => 'logstash',
+        mode    => '0600',
+        before  => Service['logstash']
+      }
+    }
+
+    file { '/etc/logstash/mqtt-root-CA.pem.crt':
+      ensure  => present,
+      content => $mqtt_ca_cert_contents,
+      replace => true,
+      owner   => 'logstash',
+      group   => 'logstash',
+      mode    => '0600',
+      before  => Service['logstash']
+    }
+  }
   service { 'logstash':
     ensure    => running,
     enable    => true,
