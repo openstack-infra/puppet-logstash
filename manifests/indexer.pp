@@ -27,10 +27,14 @@
 # [*output_template*]
 #   String. Path to indexer output config template.
 #   Default: 'logstash/output.conf.erb'
+# [*java_heap*]
+#   String. Value for LS_HEAP_SIZE passed to the init script.
+#   Default: '2g'
 class logstash::indexer (
   $conf_template   = undef,
   $input_template  = 'logstash/input.conf.erb',
   $output_template = 'logstash/output.conf.erb',
+  $java_heap       = '2g',
 ) {
   include ::logstash
 
@@ -77,7 +81,7 @@ class logstash::indexer (
 
   file { '/etc/default/logstash':
     ensure  => present,
-    source  => 'puppet:///modules/logstash/logstash.default',
+    content => template('logstash/logstash.default.erb'),
     replace => true,
     owner   => 'logstash',
     group   => 'logstash',
