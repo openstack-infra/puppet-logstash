@@ -90,7 +90,7 @@ class logstash::indexer (
     exec {'install_mqtt_plugin':
       command => '/opt/logstash/bin/plugin install logstash-output-mqtt',
       before  => Service['logstash'],
-      onlyif  => '/opt/logstash/bin/plugin list logstash-output-mqtt',
+      unless  => '/opt/logstash/bin/plugin list logstash-output-mqtt',
     }
 
     file { '/etc/logstash/mqtt-root-CA.pem.crt':
