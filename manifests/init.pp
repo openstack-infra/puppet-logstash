@@ -19,10 +19,10 @@
 class logstash {
   include ::logrotate
 
-  archive { '/tmp/logstash_2.0.0-1_all.deb':
-    source        => 'https://download.elastic.co/logstash/logstash/packages/debian/logstash_2.0.0-1_all.deb',
+  archive { '/tmp/logstash-2.4.1_all.deb':
+    source        => 'https://download.elastic.co/logstash/logstash/packages/debian/logstash-2.4.1_all.deb',
     extract       => false,
-    checksum      => '094b18c77d7c959c1203012983337d5249922290',
+    checksum      => '7ba3b174a3ef48a7d0945d9b5c7f12c5005abb47',
     checksum_type => 'sha1',
   }
 
@@ -34,12 +34,12 @@ class logstash {
 
   package { 'logstash':
     ensure   => latest,
-    source   => '/tmp/logstash_2.0.0-1_all.deb',
+    source   => '/tmp/logstash-2.4.1_all.deb',
     provider => 'dpkg',
     require  => [
       Package['logrotate'],
       Package['openjdk-7-jre-headless'],
-      Archive['/tmp/logstash_2.0.0-1_all.deb'],
+      Archive['/tmp/logstash-2.4.1_all.deb'],
     ]
   }
 }
