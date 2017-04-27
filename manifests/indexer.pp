@@ -87,12 +87,6 @@ class logstash::indexer (
     require => Class['logstash'],
   }
   if $enable_mqtt {
-    exec {'install_mqtt_plugin':
-      command => '/opt/logstash/bin/plugin install logstash-output-mqtt',
-      before  => Service['logstash'],
-      unless  => '/opt/logstash/bin/plugin list logstash-output-mqtt',
-    }
-
     file { '/etc/logstash/mqtt-root-CA.pem.crt':
       ensure  => present,
       content => $mqtt_ca_cert_contents,
