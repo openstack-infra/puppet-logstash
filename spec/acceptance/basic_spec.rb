@@ -52,7 +52,7 @@ describe 'puppet-logstash module', :if => ['debian', 'ubuntu'].include?(os[:fami
   end
 
   describe 'required package' do
-    describe package('openjdk-7-jre-headless') do
+    describe package('openjdk-8-jre-headless') do
       it { should be_installed }
     end
 
