@@ -39,7 +39,7 @@ class logstash::curator (
     hour        => $cron_hour,
     minute      => $cron_minute,
     environment => 'PATH=/usr/bin:/usr/local/bin',
-    command     => "curator --logfile /var/log/curator.log delete indices --older-than ${keep_for_days} --time-unit days --timestring \%Y.\%m.\%d"
+    command     => "curator --logfile /var/log/curator.log delete indices --older-than ${keep_for_days} --time-unit days --timestring %Y.%m.%d"
   }
 
   include ::logrotate
