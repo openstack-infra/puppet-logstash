@@ -17,6 +17,7 @@
 # Class to install common logstash items.
 #
 class logstash {
+  include ::logstash::params
   include ::logrotate
 
   archive { '/tmp/logstash-2.4.1_all.deb':
@@ -26,8 +27,8 @@ class logstash {
     checksum_type => 'sha1',
   }
 
-  if ! defined(Package['openjdk-7-jre-headless']) {
-    package { 'openjdk-7-jre-headless':
+  if ! defined(Package[$::logstash::params::jre_package]) {
+    package { $::logstash::params::jre_package:
       ensure => present,
     }
   }
@@ -38,7 +39,7 @@ class logstash {
     provider => 'dpkg',
     require  => [
       Package['logrotate'],
-      Package['openjdk-7-jre-headless'],
+      Package[$::logstash::params::jre_package],
       Archive['/tmp/logstash-2.4.1_all.deb'],
     ]
   }
